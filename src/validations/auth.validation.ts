@@ -1,10 +1,5 @@
 import { z } from "zod";
-const signupSchema = z.object({
-  username: z
-    .string({ required_error: "user name is required" })
-    .trim()
-    .min(3, "user name must be at least 3 character")
-    .max(50, "user name must not be more than 50 character"),
+const signInSchema = z.object({
   email: z
     .string({ required_error: "email is required" })
     .email()
@@ -17,4 +12,11 @@ const signupSchema = z.object({
     .min(8, "password must be at least 8 character")
     .max(50, "password must not be more than 50 character"),
 });
-export { signupSchema };
+const signupSchema = signInSchema.extend({
+  username: z
+    .string({ required_error: "user name is required" })
+    .trim()
+    .min(3, "user name must be at least 3 character")
+    .max(50, "user name must not be more than 50 character"),
+})
+export { signInSchema,signupSchema };

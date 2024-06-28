@@ -4,6 +4,7 @@ export interface User {
   email: string;
   password: string;
   isAdmin: boolean;
+  refreshToken:string,
   createdAt: string;
   updatedAt: string;
 }
