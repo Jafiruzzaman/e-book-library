@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { config } from "./config/config";
 import { limit } from "./constant/constant";
+import { authRouter } from "./router/auth.router";
 const app = express();
 // configure cors
 app.use(
@@ -31,7 +32,7 @@ app.use(
 app.use(express.static("public"));
 
 // auth routes
-// app.use()
+app.use("/api/v1/auth",authRouter)
 
 // book routes
 // app.use()
