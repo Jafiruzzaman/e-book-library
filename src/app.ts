@@ -28,7 +28,7 @@ app.use(
   })
 );
 // use public as a local storage
-app.use("public");
+app.use(express.static("public"));
 
 // auth routes
 // app.use()
