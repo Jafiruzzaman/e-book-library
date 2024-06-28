@@ -1,11 +1,23 @@
 import { asyncHandler } from "../helper/asyncHandler";
 import { NextFunction, Request, Response } from "express";
+import userModel from "../model/user.model";
 // signup
 const signup = asyncHandler(
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.json({
+      const {username,email,password} = await req.body;
+      console.log("username",username)
+      const userExist = await userModel.findOne({email})
+      if (userExist) {
+        res.status(409).json({
+          message:"user is already exist with this email"
+        })
+        return next()
+      }
+      const signUp = await userModel.create({username,email,password})
+      return res.status(201).json({
         message: "user signup successfully",
+        data:signUp
       });
     } catch (error: any) {
       return res.json({
@@ -19,7 +31,7 @@ const signup = asyncHandler(
 const signin = asyncHandler(
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.json({
+      return res.status(201).json({
         message: "user signin successfully",
       });
     } catch (error: any) {
@@ -34,7 +46,7 @@ const signin = asyncHandler(
 const signout = asyncHandler(
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.json({
+      return res.status(200).json({
         message: "user signout successfully",
       });
     } catch (error: any) {
