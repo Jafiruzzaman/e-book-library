@@ -110,8 +110,8 @@ const signout = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // @ts-ignore
-      const user= await req.user
-      console.log("user",user)
+      const user = await req.user;
+      console.log("user", user);
       const user_id = await userModel.findById(user?._id);
       const signOut = await userModel.findByIdAndUpdate(
         user_id,
