@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import { config } from "./config/config";
 import { limit } from "./constant/constant";
 import { authRouter } from "./router/auth.router";
+import { ContactRouter } from "./router/contact.router";
 const app = express();
 // configure cors
 app.use(
@@ -32,9 +33,9 @@ app.use(
 app.use(express.static("public"));
 
 // auth routes
-app.use("/api/v1/auth",authRouter)
+app.use("/api/v1/auth", authRouter);
 
-// book routes
-// app.use()
+// contact routes
+app.use("/api/v1/users", ContactRouter);
 
 export { app };
