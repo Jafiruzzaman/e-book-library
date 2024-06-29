@@ -109,9 +109,29 @@ const signin = asyncHandler(
 const signout = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.status(200).json({
-        message: "user signout successfully",
-      });
+      // @ts-ignore
+      const user= await req.user
+      console.log("user",user)
+      const user_id = await userModel.findById(user?._id);
+      const signOut = await userModel.findByIdAndUpdate(
+        user_id,
+        {
+          $unset: {
+            refreshToken: 1,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+      return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json({
+          message: "user signout successfully",
+          data: signOut,
+        });
     } catch (error: any) {
       return res.json({
         message: error.message,
